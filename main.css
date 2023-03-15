@@ -72,6 +72,10 @@ header input:focus::placeholder {
 
 }
 
+.search-button:active {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 .search-button img {
     width: 25px;
     align-self: center;
