@@ -6,7 +6,7 @@
 
 body {
     font-family: 'montserrat', sans-serif;
-    background-image: url('bg.jpg');
+    background: url('bg.jpg') no-repeat center;
     background-size: cover;
     background-position: top-center;
 }
@@ -27,6 +27,13 @@ header {
    
 }
 
+.search-wrap{
+    display: flex;
+    flex-direction: row;
+    
+    
+}
+
 header input {
     width: 100%;
     max-width: 280px;
@@ -34,7 +41,7 @@ header input {
     border: none;
     outline: none;
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 16px 0px 16px 0px;
+    border-radius: 16px 0px 0px 0px;
     border-bottom: 3px solid #068ecd;
     text-align: center;
     color: #313131;
@@ -45,6 +52,33 @@ header input {
 
 header input:focus {
     background-color: rgba(255, 255, 255, 0.6);
+    /* text-align: left; */
+}
+
+header input:focus::placeholder {
+    color: transparent;
+  }
+
+.search-button {
+    width: 40px;
+    border-top: none;
+    border-right: none;
+    border-left: 3px solid #068ecd;
+    border-bottom: 3px solid #068ecd;
+    border-radius: 0px 0px 16px 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    font-weight: 600;
+
+}
+
+.search-button img {
+    width: 25px;
+    align-self: center;
+    justify-self: center;
+    filter: invert(59%) sepia(65%) saturate(7499%) hue-rotate(176deg) brightness(97%) contrast(95%);
+
+
 }
 
 .location-option,

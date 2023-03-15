@@ -1,14 +1,17 @@
-/* 
-Missing: Add other weather details like humidity, feels like, celsius... see if the API provides for these data */ 
+/* Weather App */
 
+/* Set base URL and API key for requests */
 const api = {
     key: '6882cd2a094b41eef4bfbd4bf6b36f7e',
     baseurl: "https://api.openweathermap.org/data/2.5/"
 }
 
+/* Add event listeners fot the searchbox and search button */
 const searchbox = document.querySelector('.search-box');
 searchbox.addEventListener('keypress', setQuery);
 
+const searchButton = document.querySelector('.search-button');
+searchButton.addEventListener('click', () => getResults(`q=${searchbox.value}`));
 
 
 function setQuery(evt) {
@@ -17,9 +20,12 @@ function setQuery(evt) {
     }    
 }
 
+/* Fetch Chicago data for the initial weather values */
 window.addEventListener('load', getResults('q=Chicago'));
 
+/* Make API request and handle errors */
 function getResults (query) {
+    
     fetch(`${api.baseurl}weather?${query}&units=imperial&appid=${api.key}`)
     .then(weather => {
         if (weather.status == 200) {
@@ -31,14 +37,19 @@ function getResults (query) {
         
     }).then(displayResults)
     .catch(() => {
+        searchbox.value = '';
         window.alert('City not found. Please try a different city')
     }); 
+    
 }
 
+/* Populate weather data on the page */
 function displayResults (weather) {
     
     if (weather) {
         
+        searchbox.value='';
+
         let city = document.querySelector('.location .city');
         city.innerText = `${weather.name}, ${weather.sys.country}`;
 
@@ -62,25 +73,27 @@ function displayResults (weather) {
         humidity.innerText = `Humidity ${weather.main.humidity}%`;
         
         let feels = document.querySelector('.feels-like');
-        feels.innerText = `Feels ${Math.round(weather.main.feels_like)}°F%`;
+        feels.innerText = `Feels Like ${Math.round(weather.main.feels_like)}°F`;
 
         let celsius = document.querySelector('.celsius');
         celsius.innerText = `${Math.round((weather.main.temp - 32) * 0.5556)}°C`;
     }
 }
 
+/* Date helper function */
 function dateBuilder(d) {
-    let months = ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     let day = days[d.getDay()]; 
     let date = d.getDate();
     let month = months[d.getMonth()];
     let year = d.getFullYear();
 
-    return `${day} ${date} ${month} ${year}`;
+    return `${day}, ${date} ${month} ${year}`;
 }  
 
+/* Handle errors from location functionality */
 function errorHandler() {
 
         const link = document.createElement("a");
@@ -92,7 +105,7 @@ function errorHandler() {
         link.addEventListener('click', () => {window.location = window.location});
 }
 
-
+/* Determine device's location */
 function useLocation(evt) {
     
     evt.preventDefault();
@@ -107,5 +120,6 @@ function useLocation(evt) {
 
 }
 
+/* Add event listener for the 'use location' link */
 const locationLink = document.querySelector('.location-link').addEventListener('click', useLocation);
  
